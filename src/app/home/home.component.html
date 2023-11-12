@@ -1,3 +1,46 @@
-<ul>
-    <li *ngFor="let player of players">{{player.FirstName}} {{player.LastName}}</li>
-</ul>
+<div class="heading text-center" style="margin-top: 1rem">
+    <h2>NFL Week {{currentWeek}}</h2>
+</div>
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-4" style="margin-left: 2rem; margin-right: 2rem;">
+    <div class="col" *ngFor="let game of matchUps">
+        <div class="card">
+          <!-- <img src="..." class="card-img-top" alt="..."> -->
+          <div class="card-body">
+            <div class="row" style="clear: both">
+                <h5 style="display: inline-block;">{{game.AwayTeam}} &#64; {{game.HomeTeam}}</h5>
+                <h5 style="display: inline-block;">{{game.Date | date: 'MMM dd, YYYY - h:mm a'}} </h5>
+            </div>
+            <div class="card-text">
+                <table class="table table-borderless table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Q1</th>
+                        <th scope="col">Q2</th>
+                        <th scope="col">Q3</th>
+                        <th scope="col">Q4</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>{{game.AwayTeam}}</th>
+                        <td>{{game.AwayScoreQuarter1}}</td>
+                        <td>{{game.AwayScoreQuarter2}}</td>
+                        <td>{{game.AwayScoreQuarter3}}</td>
+                        <td>{{game.AwayScoreQuarter4}}</td>
+                      </tr>
+                      <tr>
+                        <th>{{game.HomeTeam}}</th>
+                        <td>{{game.HomeScoreQuarter1}}</td>
+                        <td>{{game.HomeScoreQuarter2}}</td>
+                        <td>{{game.HomeScoreQuarter3}}</td>
+                        <td>{{game.HomeScoreQuarter4}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <p class="card-text"></p>
+          </div>
+        </div>
+    </div>
+</div>
