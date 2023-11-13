@@ -69,7 +69,10 @@ export class HomeComponent {
     else if(Number(day)>=206 && Number(day)<=212){
       this.currentWeek = '23'
     }
+    this.getSeason();
+  }
 
+  getSeason(){
     if(Number(this.currentWeek) <= 18){
       this.season = '2023REG'
     }
@@ -85,6 +88,17 @@ export class HomeComponent {
       this.matchUps = data;
       console.log(this.matchUps);
     })
+  }
+
+  changeWeek(backOrForward: string){
+    if(backOrForward == 'back'){
+      this.currentWeek = (Number(this.currentWeek) - 1).toString();
+    }
+    else{
+      this.currentWeek = (Number(this.currentWeek) + 1).toString();;
+    }
+    this.getSeason();
+    this.getWeekMatchUps();
   }
 
 }
