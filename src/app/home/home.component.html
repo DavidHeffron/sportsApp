@@ -1,7 +1,17 @@
-<div class="heading text-center" style="margin-top: 1rem">
-  <h2>
-    <img src="assets/img/left-arrow.svg" (click)="changeWeek('back')"> NFL Week {{currentWeek}} <img src="assets/img/right-arrow.svg" (click)="changeWeek('forward')">
-  </h2>
+<div class="heading text-center row" style="margin-top: 1rem">
+
+  <div class="col mt-2">
+    <img class="link" src="assets/img/left-arrow.svg" (click)="changeWeek('back')" style="margin-left: 20rem;" matTooltip="Get previous weeks matchups">
+  </div>
+
+  <div class="col" style="width: 20rem;">
+    <h2>NFL {{currentYear}} {{displaySeasonArr[displaySeasonIndex]}} Week <span *ngIf="displaySeasonIndex == 1 || displaySeasonIndex == 0">{{currentNFLWeek}}</span></h2>
+  </div>
+
+  <div class="col mt-2">
+    <img class="link" src="assets/img/right-arrow.svg" (click)="changeWeek('forward')" style="margin-right: 20rem;" matTooltip="Get next weeks matchups">
+  </div>
+
 </div>
 <div class="row row-cols-1 row-cols-md-2 g-4" style="margin-left: 2rem; margin-right: 2rem;">
     <div class="col" *ngFor="let game of matchUps">
@@ -27,20 +37,26 @@
                     </thead>
                     <tbody>
                       <tr>
-                        <th>{{game.AwayTeam}}</th>
-                        <td>{{game.AwayScoreQuarter1}}</td>
-                        <td>{{game.AwayScoreQuarter2}}</td>
-                        <td>{{game.AwayScoreQuarter3}}</td>
-                        <td>{{game.AwayScoreQuarter4}}</td>
-                        <td>{{game.AwayScore}}</td>
-                      </tr>
-                      <tr>
-                        <th>{{game.HomeTeam}}</th>
+                        <td>
+                          <img [src]="'assets/img/' + game.HomeTeam + '_logo.png'" width="25">
+                          <a [routerLink]="['/team-stats', game.HomeTeam]" matTooltip="See home teams season stats" style="margin-left: 0.5rem; margin-top: 0.3rem;">{{game.HomeTeam}}</a>
+                        </td>
                         <td>{{game.HomeScoreQuarter1}}</td>
                         <td>{{game.HomeScoreQuarter2}}</td>
                         <td>{{game.HomeScoreQuarter3}}</td>
                         <td>{{game.HomeScoreQuarter4}}</td>
                         <td>{{game.HomeScore}}</td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <img [src]="'assets/img/' + game.AwayTeam + '_logo.png'" width="25">
+                          <a [routerLink]="['/team-stats', game.AwayTeam]" matTooltip="See away teams season stats" style="margin-left: 0.5rem; margin-top: 0.3rem;">{{game.AwayTeam}}</a>
+                        </td>
+                        <td>{{game.AwayScoreQuarter1}}</td>
+                        <td>{{game.AwayScoreQuarter2}}</td>
+                        <td>{{game.AwayScoreQuarter3}}</td>
+                        <td>{{game.AwayScoreQuarter4}}</td>
+                        <td>{{game.AwayScore}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -49,7 +65,4 @@
           </div>
         </div>
     </div>
-</div>
-<div style="margin-top: 2rem;">
-  <p>Please note I am using a free version of an NFL api that does not provide live updates, the API data is updated the day after the event is played.</p>
 </div>

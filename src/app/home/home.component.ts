@@ -10,9 +10,14 @@ import { WeekMatchUpsService } from '../services/week-match-ups.service';
 })
 export class HomeComponent {
   players: any;
-  currentWeek = '';
+  currentYear = '';
+  currentNFLWeek = '';
+  //regular, pre, or post season
+  seasonType = '';
   matchUps: any;
-  season = '';
+  displaySeasonArr: string[] = ['Preseason', 'Regular Season', 'Wildcard', 'Divisional Round', 'Confrence Championship', 'Super Bowl'];
+  displaySeasonIndex!: number;
+  
 
   constructor(
     private playersService: PlayersService,
@@ -25,79 +30,225 @@ export class HomeComponent {
   }
 
   getCurrentNflWeek(){
+    //Checks for current week of the year and then sets the correct current NFL week. If we are in the offseason, the default week will be the most recent super bowl week.
     const today = new Date();
-    const day = formatDate(today, 'MMdd', 'en-US');
-    if(Number(day)>=1107 && Number(day)<=1113){
-      this.currentWeek = '10'
+    const currentWeek = formatDate(today, 'w', 'en-US');
+    this.currentYear = formatDate(today, 'YYYY', 'en-US');
+    if(currentWeek == '7'){
+      this.currentNFLWeek = '4';
+      this.seasonType = 'POST';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 5;
     }
-    else if(Number(day)>=1114 && Number(day)<=1120){
-      this.currentWeek = '11'
+    else if(currentWeek == '6'){
+      this.currentNFLWeek = '4';
+      this.seasonType = 'POST';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 5;
+      //probowl
     }
-    else if(Number(day)>=1121 && Number(day)<=1127){
-      this.currentWeek = '12'
+    else if(currentWeek == '5'){
+      this.currentNFLWeek = '3';
+      this.seasonType = 'POST';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 4;
     }
-    else if(Number(day)>=1128 && Number(day)<=1204){
-      this.currentWeek = '13'
+    else if(currentWeek == '4'){
+      this.currentNFLWeek = '2';
+      this.seasonType = 'POST';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 3;
     }
-    else if(Number(day)>=1205 && Number(day)<=1211){
-      this.currentWeek = '14'
+    else if(currentWeek == '3'){
+      this.currentNFLWeek = '1';
+      this.seasonType = 'POST';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 2;
     }
-    else if(Number(day)>=1212 && Number(day)<=1218){
-      this.currentWeek = '15'
+    else if(currentWeek == '2'){
+      this.currentNFLWeek = '18';
+      this.seasonType = 'REG';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=1219 && Number(day)<=1225){
-      this.currentWeek = '16'
+    else if(currentWeek == '1'){
+      this.currentNFLWeek = '17';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=1226 || Number(day)<=101){
-      this.currentWeek = '17'
+    else if(currentWeek == '52'){
+      this.currentNFLWeek = '16';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=102 && Number(day)<=108){
-      this.currentWeek = '18'
+    else if(currentWeek == '51'){
+      this.currentNFLWeek = '15';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=109 && Number(day)<=115){
-      this.currentWeek = '19'
+    else if(currentWeek == '50'){
+      this.currentNFLWeek = '14';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=116 && Number(day)<=122){
-      this.currentWeek = '20'
+    else if(currentWeek == '49'){
+      this.currentNFLWeek = '13';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=123 && Number(day)<=129){
-      this.currentWeek = '21'
+    else if(currentWeek == '48'){
+      this.currentNFLWeek = '12';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=130 && Number(day)<=205){
-      this.currentWeek = '22'
+    else if(currentWeek == '47'){
+      this.currentNFLWeek = '11';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    else if(Number(day)>=206 && Number(day)<=212){
-      this.currentWeek = '23'
+    else if(currentWeek == '46'){
+      this.currentNFLWeek = '10';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
     }
-    this.getSeason();
-  }
+    else if(currentWeek == '45'){
+      this.currentNFLWeek = '9';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '8'){
+      this.currentNFLWeek = '8';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '43'){
+      this.currentNFLWeek = '7';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '42'){
+      this.currentNFLWeek = '6';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '41'){
+      this.currentNFLWeek = '5';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '40'){
+      this.currentNFLWeek = '4';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '39'){
+      this.currentNFLWeek = '3';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '38'){
+      this.currentNFLWeek = '2';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '37'){
+      this.currentNFLWeek = '1';
+      this.seasonType = 'REG';
+      this.displaySeasonIndex = 1;
+    }
+    else if(currentWeek == '36'){
+      this.currentNFLWeek = '3';
+      this.seasonType = 'PRE';
+      this.displaySeasonIndex = 0;
 
-  getSeason(){
-    if(Number(this.currentWeek) <= 18){
-      this.season = '2023REG'
+    }
+    else if(currentWeek == '35'){
+      this.currentNFLWeek = '2';
+      this.seasonType = 'PRE';
+      this.displaySeasonIndex = 0;
+    }
+    else if(currentWeek == '34'){
+      this.currentNFLWeek = '1';
+      this.seasonType = 'PRE';
+      this.displaySeasonIndex = 0;
+    }
+    else if(currentWeek == '33'){
+      this.currentNFLWeek = '1';
+      this.seasonType = 'PRE';
+      this.displaySeasonIndex = 0;
     }
     else{
-      this.season = '2023POST'
-      this.currentWeek = (Number(this.currentWeek) - 18).toString();
+      this.currentNFLWeek = '4';
+      this.seasonType = 'POST';
+      this.currentYear = (Number(this.currentYear) - 1).toString();
+      this.displaySeasonIndex = 5;
     }
   }
 
+
   getWeekMatchUps(){
-    this.weekMatchUpsService.getWeekMatchUps(this.currentWeek, this.season)
+    //Calls the api to get the information based on the nfl week and year
+    this.weekMatchUpsService.getWeekMatchUps(this.currentNFLWeek, (this.seasonType + this.currentYear))
     .subscribe((data: any) => {
       this.matchUps = data;
-      console.log(this.matchUps);
     })
   }
 
+  //Method to allow users to go back or forward a week and see the matchup info for that week
   changeWeek(backOrForward: string){
+    //going one week back
     if(backOrForward == 'back'){
-      this.currentWeek = (Number(this.currentWeek) - 1).toString();
+      
+      if(this.seasonType == 'POST' && this.currentNFLWeek != '1'){
+          this.displaySeasonIndex--;
+          this.currentNFLWeek = (Number(this.currentNFLWeek) - 1).toString();
+      } 
+      else if(this.seasonType == 'POST' && this.currentNFLWeek == '1'){
+        this.displaySeasonIndex--;
+        this.currentNFLWeek = '18';
+        this.seasonType = 'REG';
+      }
+      else if (this.seasonType == 'REG' && this.currentNFLWeek == '1'){
+        this.displaySeasonIndex--;
+        this.currentNFLWeek = '3';
+        this.seasonType = 'PRE';
+      }
+      else if (this.seasonType == 'PRE' && this.currentNFLWeek == '1'){
+        this.seasonType = 'POST';
+        this.currentNFLWeek = '4';
+        this.currentYear = (Number(this.currentYear) - 1).toString();
+        this.displaySeasonIndex = 5;
+      }
+      else{
+        this.currentNFLWeek = (Number(this.currentNFLWeek) - 1).toString();
+      }
     }
+    //Going a week forward
     else{
-      this.currentWeek = (Number(this.currentWeek) + 1).toString();;
+      if (this.seasonType == 'POST' && this.currentNFLWeek == '4'){
+        this.currentNFLWeek = '1';
+        this.seasonType = 'PRE';
+        this.currentYear = (Number(this.currentYear) + 1).toString();
+        this.displaySeasonIndex = 0;
+      }
+      else if(this.seasonType == 'POST' && this.currentNFLWeek != '4'){
+        this.displaySeasonIndex++;
+        this.currentNFLWeek = (Number(this.currentNFLWeek) + 1).toString();
+      }
+      else if (this.seasonType == 'REG' && this.currentNFLWeek == '18'){
+        this.seasonType = 'POST';
+        this.currentNFLWeek = '1';
+        this.displaySeasonIndex++;
+      }
+      else if (this.seasonType == 'PRE' && this.currentNFLWeek == '3'){
+        this.seasonType = "REG";
+        this.currentNFLWeek = '1';
+        this.displaySeasonIndex++;
+      }
+      else{
+        this.currentNFLWeek = (Number(this.currentNFLWeek) + 1).toString();;
+      }
     }
-    this.getSeason();
     this.getWeekMatchUps();
   }
 
