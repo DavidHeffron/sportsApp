@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,11 @@ import { Injectable } from '@angular/core';
 })
 export class EspnStatsService {
 
-  constructor() { }
+  endpoint_url = 'https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/'
+
+  constructor(private http: HttpClient) { }
+
+  public getEspnTeamStats(teamId: string){
+    return this.http.get(this.endpoint_url + teamId); 
+  }
 }

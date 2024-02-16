@@ -1,5 +1,6 @@
 .grid {
   display: flex;
+  justify-content: center;
 }
 .gutters {
   margin: -10px 10px 0 0;
@@ -21,9 +22,4 @@
 }
 .sixth {
   flex-basis: 16.67%;
-}
-.grid div div {
-  background-color: rgba(255, 255, 255, 0.7);
-  height: 100%;
-  padding: 10px;
 }

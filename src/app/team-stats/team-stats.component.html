@@ -1,31 +1,152 @@
 <div class="mt-2">
 
-    <!-- <div class="row">
-        <div class="col-sm-3" style="margin-top: 2rem; margin-left: 4rem;">
-            <img [src]="'assets/img/' + team + '_logo.png'" width="250">
-        </div>
-        <canvas
-            baseChart
-            class="chart"
-            style="max-width: 40rem; max-height: 20rem;"
-            [data]="barChartData"
-            [options]="barChartOptions"
-            [plugins]="barChartPlugins"
-            [type]="barChartType"
-            (chartClick)="chartClicked($event)"
-        >
-        </canvas>
-    </div> -->
-
-    <div class="grid gutters">
+    <div class="grid gutters" style="width: 65%; margin: auto;">
         <div class="sixth">
             <div><img [src]="'assets/img/' + team + '_logo.png'" width="150"></div>
         </div>
         <div class="half">
-            <div><h2>{{teamName}}</h2></div>
+            <div style="margin-left: 2rem; text-align: center;">
+                <h2>{{teamName}}</h2>
+                <h3 *ngIf="espnStats">{{espnStats.team.standingSummary}}</h3>
+            </div>
+
         </div>
-        <div class="third"><div>v</div></div>
+        <div class="third">
+            <div style="display: flex; flex-flow: row wrap;" *ngIf="espnStats">
+                <div class="col text-center" style="flex-basis: 30%;">
+                    <h4>{{teamRecord}}</h4>
+                    <h5>Record</h5>
+                </div>
+                <div class="col text-center" style="flex-basis: 35%;">
+                    <h4>{{espnStats.team.record.items[1].summary}}</h4>
+                    <h5>Home Record</h5>
+                </div>
+                <div class="col text-center" style="flex-basis: 35%;">
+                    <h4>{{espnStats.team.record.items[2].summary}}</h4>
+                    <h5>Away Record</h5>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <mat-tab-group style="width: 65%; margin: auto;" mat-stretch-tabs="false" mat-align-tabs="left">
+        <mat-tab label="Statistics">
+            <div style="margin-top: 2rem; padding: 10px; max-width: 99%;" *ngIf="seasonStats">
+                <h2>Offense Stats</h2>
+                <div class="row">
+                    <div class="col" style="font-weight: 500;">Total Yards</div>
+                    <div class="col" style="text-align: right;">{{seasonStats[0].OffensiveYards/seasonStats[0].Games | number: '1.1-1'}}</div>
+                </div>
+                <div class="row mt-2">
+                    <mat-progress-bar
+                        class="example-margin"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="(this.seasonStats[0].OffensiveYards/this.seasonStats[0].Games)/4">
+                    </mat-progress-bar>
+                </div>
+                <div class="row mt-3">
+                    <div class="col" style="font-weight: 500;">Passing Yards</div>
+                    <div class="col" style="text-align: right;">{{seasonStats[0].PassingYards/seasonStats[0].Games | number: '1.1-1'}}</div>
+                </div>
+                <div class="row mt-2">
+                    <mat-progress-bar
+                        class="example-margin"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="(this.seasonStats[0].PassingYards / this.seasonStats[0].Games)/2.8">
+                    </mat-progress-bar>
+                </div>
+                <div class="row mt-3">
+                    <div class="col" style="font-weight: 500;">Rushing Yards</div>
+                    <div class="col" style="text-align: right;">{{seasonStats[0].RushingYards/seasonStats[0].Games | number: '1.1-1'}}</div>
+                </div>
+                <div class="row mt-2">
+                    <mat-progress-bar
+                        class="example-margin"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="(seasonStats[0].RushingYards / seasonStats[0].Games)/1.4">
+                    </mat-progress-bar>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 10px; max-width: 99%;" *ngIf="seasonStats">
+                <h2>Defense Stats</h2>
+                <div class="row">
+                    <div class="col" style="font-weight: 500;">Total Yards</div>
+                    <div class="col" style="text-align: right;">{{seasonStats[0].OpponentOffensiveYards/seasonStats[0].Games | number: '1.1-1'}}</div>
+                </div>
+                <div class="row mt-2">
+                    <mat-progress-bar
+                        class="example-margin"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="(seasonStats[0].OpponentOffensiveYards / this.seasonStats[0].Games)/4">
+                    </mat-progress-bar>
+                </div>
+                <div class="row mt-3">
+                    <div class="col" style="font-weight: 500;">Passing Yards</div>
+                    <div class="col" style="text-align: right;">{{seasonStats[0].OpponentPassingYards/seasonStats[0].Games | number: '1.1-1'}}</div>
+                </div>
+                <div class="row mt-2">
+                    <mat-progress-bar
+                        class="example-margin"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="(seasonStats[0].OpponentPassingYards / this.seasonStats[0].Games)/2.8">
+                    </mat-progress-bar>
+                </div>
+                <div class="row mt-3">
+                    <div class="col" style="font-weight: 500;">Rushing Yards</div>
+                    <div class="col" style="text-align: right;">{{seasonStats[0].OpponentRushingYards/seasonStats[0].Games | number: '1.1-1'}}</div>
+                </div>
+                <div class="row mt-2">
+                    <mat-progress-bar
+                        class="example-margin"
+                        [color]="color"
+                        [mode]="mode"
+                        [value]="(seasonStats[0].OpponentRushingYards / this.seasonStats[0].Games)/1.4">
+                    </mat-progress-bar>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Statistics Visualizations">
+            <div style="margin-top: 2rem; padding: 10px; max-width: 99%;">
+                <div class="row" style="margin: auto;">
+                    <h2>Total Yards</h2>
+                    <canvas
+                        baseChart
+                        class="chart"
+                        [data]="barChartData"
+                        [options]="barChartOptions"
+                        [plugins]="barChartPlugins"
+                        [type]="barChartType"
+                        (chartClick)="chartClicked($event)"
+                    >
+                    </canvas>
+                </div>
+                <h2 style="margin-top: 2rem;">Percentages</h2>
+                <!-- NEXT work add the ability to see teams stats by year -->
+                <div class="row" style="margin: auto; max-width: 75%;">
+                    <canvas
+                        baseChart
+                        class="chart"
+                        [data]="radarChartData"
+                        [options]="radarChartOptions"
+                        [type]="radarChartType"
+                    >
+                    </canvas>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Compare">
+            Content 3
+        </mat-tab>
+
+      </mat-tab-group>
+      
 
 </div>
 
