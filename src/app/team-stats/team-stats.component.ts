@@ -41,11 +41,12 @@ export class TeamStatsComponent {
   constructor(private teamStatService: TeamStatsService, private route: ActivatedRoute, public teamInfoService: TeamInfoService, private espnService: EspnStatsService){}
 
   ngOnInit(){
+    window.scrollTo(0, 0);
     this.team = this.route.snapshot.paramMap.get('teamName')?.toUpperCase();
     this.getCurrentYear();
     this.getSeasonStats('');
     this.espnService.getYear().subscribe(items => {
-      console.log(items)
+      console.log(items);
     })
   }
   
