@@ -14,21 +14,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BettingComponent } from './betting/betting.component';
 import { FantasyComponent } from './fantasy/fantasy.component';
-import { HomeComponent } from './home/home.component';
+import { ScoresComponent } from './scores/scores.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TeamStatsComponent } from './team-stats/team-stats.component';
 import { NgChartsModule } from 'ng2-charts';
 import { TeamInfoService } from './services/team-info.service';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    ScoresComponent,
     NavbarComponent,
     FantasyComponent,
     BettingComponent,
     TeamStatsComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
