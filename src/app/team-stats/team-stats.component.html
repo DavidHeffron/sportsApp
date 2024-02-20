@@ -25,6 +25,16 @@
                     <h4>{{espnStats.team.record.items[2].summary}}</h4>
                     <h5>Away Record</h5>
                 </div>
+                <!-- Possibly add later a feature to select a year and see that years stats -->
+                <!-- <div style="flex-basis: 99%;">
+                    <mat-label>Year</mat-label>
+                    <select matNativeControl required>
+                      <option value="2023">2023</option>
+                      <option value="2022">2022</option>
+                      <option value="2021">2021</option>
+                      <option value="2020">2020</option>
+                    </select>
+                </div> -->
             </div>
         </div>
     </div>
@@ -142,7 +152,72 @@
         </mat-tab>
 
         <mat-tab label="Compare">
-            Content 3
+            <div style="text-align: center; display: flex; flex-direction: column;">
+                <div class="col">
+                    <h4 style="margin-top: 2rem;">Please select a team to compare stats with.</h4>
+                </div>
+                <div class="col" style="max-width: 30rem; margin: auto; margin-bottom: 3rem;">
+                    <select class="form-select" #teamSelect (change)="getCompareChartData(teamSelect.value)">
+                        <option selected>Select Team</option>
+                        <option *ngFor="let team of allTeamStats" [value]="team.Team">
+                            {{this.teamInfoService.getTeamName(team.Team)}}
+                        </option>
+                      </select>
+                </div>
+            </div>
+            <div *ngIf="compareTeamStats">
+                <table class="table table-hover" style="background-color: rgb(255, 0, 0);">
+                    <thead>
+                      <tr>
+                        <th scope="col">Categories</th>
+                        <th scope="col">{{this.teamInfoService.getTeamName(this.team)}}</th>
+                        <th scope="col">{{this.teamInfoService.getTeamName(compareTeamStats[0].Team)}}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="row">Passing Yards</td>
+                        <td>{{seasonStats[0].PassingYards}}</td>
+                        <td>{{compareTeamStats[0].PassingYards}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Rushing Yards</td>
+                        <td>{{seasonStats[0].RushingYards}}</td>
+                        <td>{{compareTeamStats[0].RushingYards}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Oppoenents Passing Yards</td>
+                        <td>{{seasonStats[0].OpponentPassingYards}}</td>
+                        <td>{{compareTeamStats[0].OpponentPassingYards}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Oppoenents Rushing Yards</td>
+                        <td>{{seasonStats[0].OpponentPassingYards}}</td>
+                        <td>{{compareTeamStats[0].OpponentPassingYards}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Passing TDs</td>
+                        <td>{{seasonStats[0].PassingTouchdowns}}</td>
+                        <td>{{compareTeamStats[0].PassingTouchdowns}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Rushing TDs</td>
+                        <td>{{seasonStats[0].RushingTouchdowns}}</td>
+                        <td>{{compareTeamStats[0].RushingTouchdowns}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Opponent Passing TDs</td>
+                        <td>{{seasonStats[0].OpponentPassingTouchdowns}}</td>
+                        <td>{{compareTeamStats[0].OpponentPassingTouchdowns}}</td>
+                      </tr>
+                      <tr>
+                        <td scope="row">Opponent Rushing TDs</td>
+                        <td>{{seasonStats[0].OpponentRushingTouchdowns}}</td>
+                        <td>{{compareTeamStats[0].OpponentRushingTouchdowns}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
         </mat-tab>
 
       </mat-tab-group>

@@ -33,6 +33,7 @@ export class HomeComponent {
     //Checks for current week of the year and then sets the correct current NFL week. If we are in the offseason, the default week will be the most recent super bowl week.
     const today = new Date();
     const currentWeek = formatDate(today, 'w', 'en-US');
+    console.log(currentWeek)
     this.currentYear = formatDate(today, 'YYYY', 'en-US');
     if(currentWeek == '7'){
       this.currentNFLWeek = '4';
@@ -116,7 +117,7 @@ export class HomeComponent {
       this.seasonType = 'REG';
       this.displaySeasonIndex = 1;
     }
-    else if(currentWeek == '8'){
+    else if(currentWeek == '44'){
       this.currentNFLWeek = '8';
       this.seasonType = 'REG';
       this.displaySeasonIndex = 1;

@@ -23,3 +23,6 @@
 .sixth {
   flex-basis: 16.67%;
 }
+.table-headers {
+  font-weight: 300;
+}

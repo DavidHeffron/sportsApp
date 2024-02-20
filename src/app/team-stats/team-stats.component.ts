@@ -20,9 +20,11 @@ import { ProgressBarMode } from '@angular/material/progress-bar';
 export class TeamStatsComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
+  allTeamStats: any;
   seasonStats: any;
   currentYear!: string;
   team: any;
+  compareTeamStats: any;
   //Created a team name service and variable that will map the team initials that the api gives us to the full team name since the api doesn't provide the full team name
   teamName = '';
   teamId = '';
@@ -31,35 +33,42 @@ export class TeamStatsComponent {
 
   color: ThemePalette = 'primary';
   mode: ProgressBarMode = 'determinate';
-  totalYardsValue = 0;
-  passYPG = 0;
-  rushYPG = 0;
-  //Highest buffer value is 100, so we assume around 4000 yards is highest for progress bar, divide by 4 to get value of 100 and then divide each teams yards per game by 4
-  //to get proper progress bar stats
-  totalYardsBufferValue = 100;
-  passBufferValue = 65;
-  rushBufferValue = 100;
+  selectableYears = ['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007','2008', '2009', '2010', '2011','2012', '2013', '2014', '2015',
+                    '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023']
 
-  constructor(private teamStatService: TeamStatsService, private route: ActivatedRoute, private teamInfoService: TeamInfoService, private espnService: EspnStatsService){}
+
+
+  constructor(private teamStatService: TeamStatsService, private route: ActivatedRoute, public teamInfoService: TeamInfoService, private espnService: EspnStatsService){}
 
   ngOnInit(){
     this.team = this.route.snapshot.paramMap.get('teamName')?.toUpperCase();
-    //this.getCurretYear();
-    this.getSeasonStats();
+    this.getCurrentYear();
+    this.getSeasonStats('');
+    this.espnService.getYear().subscribe(items => {
+      console.log(items)
+    })
   }
+  
   //get current year for initial load, user can later change year to see different years stats
-  //getCurrentYear();
-  //remember endpoint
- // https://site.api.espn.com/apis/site/v2/sports/football/nfl/seasons/2017/teams/21
-  getSeasonStats(){
+  getCurrentYear(){
     const today = new Date();
     let currentWeek = formatDate(today, 'w', 'en-US');
     this.currentYear = formatDate(today, 'YYYY', 'en-US');
     if (Number(currentWeek) < 36){
       this.currentYear = (Number(this.currentYear) - 1).toString();
     }
-
-    this.teamStatService.getTeamSeasonStats(`${this.currentYear}REG`).subscribe((data: any) => {
+  }
+  selectDifferentYear(year: string){
+    this.getSeasonStats(year);
+  }
+  //remember endpoint
+ // https://site.api.espn.com/apis/site/v2/sports/football/nfl/seasons/2017/teams/21
+  getSeasonStats(year: string){
+    if(year == ''){
+      year = this.currentYear;
+    }
+    this.teamStatService.getTeamSeasonStats(`${year}REG`).subscribe((data: any) => {
+      this.allTeamStats = data;
       this.seasonStats = data.filter((item: any) => item.Team == this.team)
       this.updateChartData(this.seasonStats[0]);
       this.updateRadarChart(this.seasonStats[0]);
@@ -73,6 +82,7 @@ export class TeamStatsComponent {
     this.espnService.getEspnTeamStats(teamId).subscribe((data:any) => {
       this.teamRecord = data.team.record.items[0].summary;
       this.espnStats = data;
+      this.updateColors();
     });
   }
 
@@ -102,10 +112,23 @@ export class TeamStatsComponent {
   public barChartData: ChartData<'bar'> = {
     labels: ['Passing Yards', 'Rushing Yards', 'Total Yards'],
     datasets: [
-      { data: [], label: 'Offense', backgroundColor: 'rgb(79, 76, 82, 0.7)', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
-      { data: [], label: 'Defense', backgroundColor: 'rgb(196, 49, 49, 0.7)', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
+      { data: [], label: 'Offense', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
+      { data: [], label: 'Defense', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
     ],
   };
+
+  updateColors(){
+    this.barChartData.datasets[0].backgroundColor = '#' + this.espnStats.team.color + 'CC'; 
+    this.barChartData.datasets[1].backgroundColor = '#' + this.espnStats.team.alternateColor + 'CC'; 
+
+    this.radarChartData.datasets[0].backgroundColor = '#' + this.espnStats.team.color + '50'; 
+    this.radarChartData.datasets[1].backgroundColor = '#' + this.espnStats.team.alternateColor + '50'; 
+    this.radarChartData.datasets[0].borderColor = '#' + this.espnStats.team.color; 
+    this.radarChartData.datasets[1].borderColor = '#' + this.espnStats.team.alternateColor;
+    this.radarChartData.datasets[0].pointBackgroundColor = '#' + this.espnStats.team.color; 
+    this.radarChartData.datasets[1].pointBackgroundColor = '#' + this.espnStats.team.alternateColor; 
+
+  }
 
   updateChartData(stats: any){
     this.barChartData.datasets[0].data.push(stats.PassingYards)
@@ -115,6 +138,10 @@ export class TeamStatsComponent {
     this.barChartData.datasets[1].data.push(stats.OpponentRushingYards)
     this.barChartData.datasets[1].data.push(stats.OpponentOffensiveYards)
     this.chart?.update();
+  }
+
+  getCompareChartData(team: string,){
+    this.compareTeamStats = this.allTeamStats.filter((item: any) => item.Team == team)   
   }
 
     // events
@@ -151,12 +178,8 @@ export class TeamStatsComponent {
   public radarChartData: ChartData<'radar'> = {
     labels: this.radarChartLabels,
     datasets: [
-      { data: [], label: 'Offense', backgroundColor: 'rgb(59, 161, 21, 0.3)',
-      borderColor: 'rgb(59, 161, 21)', pointBorderColor: 'white',
-      pointBackgroundColor: 'rgb(59, 161, 21)' },
-      { data: [], label: 'Defense Allowed', backgroundColor: 'rgb(171, 27, 27, 0.3)',
-      borderColor: 'rgb(171, 27, 27)', pointBorderColor: 'white',
-      pointBackgroundColor: 'rgb(171, 27, 27)' },
+      { data: [], label: 'Offense', pointBorderColor: 'white'},
+      { data: [], label: 'Defense Allowed', pointBorderColor: 'white'},
     ],
   };
   public radarChartType: ChartType = 'radar';
