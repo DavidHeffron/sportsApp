@@ -5,9 +5,9 @@
 .gutters {
   margin: -10px 10px 0 0;
 }
-.gutters > div {
-  padding: 20px 0px 30px 10px; /* padding order clockwise starting from top*/
-}
+/* .gutters > div {
+  padding: 20px 0px 30px 10px;
+} */
 .half {
   flex-basis: 50%;
 }
@@ -22,6 +22,9 @@
 }
 .sixth {
   flex-basis: 16.67%;
+}
+.twothirds {
+  flex-basis: 63.67%;
 }
 .table-headers {
   font-weight: 300;

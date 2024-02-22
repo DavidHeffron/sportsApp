@@ -1,15 +1,16 @@
-<div class="heading text-center row" style="margin-top: 1rem">
+<div class="heading text-center" style="margin-top: 1rem; display: flex; flex-flow: row nowrap; justify-content: center;">
 
-  <div class="col mt-2">
-    <img class="link" src="assets/img/left-arrow.svg" (click)="changeWeek('back')" style="margin-left: 20rem;" matTooltip="Get previous weeks matchups">
+
+  <div class="mt-2">
+    <img class="link" src="assets/img/left-arrow.svg" (click)="changeWeek('back')" matTooltip="Get previous weeks matchups">
   </div>
 
-  <div class="col" style="width: 20rem;">
+  <div style="flex-basis: 20rem; text-align: center;">
     <h2>NFL {{currentYear}} {{displaySeasonArr[displaySeasonIndex]}} Week <span *ngIf="displaySeasonIndex == 1 || displaySeasonIndex == 0">{{currentNFLWeek}}</span></h2>
   </div>
 
-  <div class="col mt-2">
-    <img class="link" src="assets/img/right-arrow.svg" (click)="changeWeek('forward')" style="margin-right: 20rem;" matTooltip="Get next weeks matchups">
+  <div class="mt-2">
+    <img class="link" src="assets/img/right-arrow.svg" (click)="changeWeek('forward')" matTooltip="Get next weeks matchups">
   </div>
 
 </div>
@@ -18,10 +19,12 @@
         <div class="card">
           <!-- <img src="..." class="card-img-top" alt="..."> -->
           <div class="card-body">
-            <h5 style="display: inline; float: left;">{{game.Date | date: 'MMM dd, YYYY - h:mm a'}} </h5>
-            <h5 style="display: inline; float: right;" *ngIf="game.StadiumDetails.Country != 'USA' ">, {{game.StadiumDetails.Country}}</h5>
-            <h5 style="display: inline; float: right;" *ngIf="game.StadiumDetails.State">, {{game.StadiumDetails.State}}</h5>
-            <h5 style="display: inline; float: right;">{{game.StadiumDetails.Name}} - {{game.StadiumDetails.City}}</h5>
+              <h5 style="float: left;">{{game.Date | date: 'MMM dd, YYYY - h:mm a'}} </h5>
+              <div style="float: right; display: flex; flex-flow: row nowrap;">
+                <h5>{{game.StadiumDetails.Name}} - {{game.StadiumDetails.City}}</h5>
+                <h5 *ngIf="game.StadiumDetails.Country != 'USA' ">, {{game.StadiumDetails.Country}}</h5>
+                <h5 *ngIf="game.StadiumDetails.State">, {{game.StadiumDetails.State}}</h5>
+              </div>
 
             <div class="card-text">
                 <table class="table table-borderless table-sm">

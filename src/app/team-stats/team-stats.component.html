@@ -1,29 +1,29 @@
 <div class="mt-2">
 
-    <div class="grid gutters" style="width: 65%; margin: auto;">
-        <div class="sixth">
-            <div><img [src]="'assets/img/' + team + '_logo.png'" width="150"></div>
-        </div>
-        <div class="half">
-            <div style="margin-left: 2rem; text-align: center;">
+    <div class="grid gutters" style="width: 75%; margin: auto; display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; align-items: center; margin-top: 1.5rem; margin-bottom: 1rem;">
+        <div class="twothirds" style="display: flex; flex-flow: row wrap; justify-content: center; align-items: center">
+            <div style="object-fit: scale-down;">
+                <img [src]="'assets/img/' + team + '_logo.png'" style="max-width: 150px; object-fit: scale-down;">
+            </div>
+            <div style="flex-grow: 4; text-align: center; margin-left: 1rem; margin-right: 1.5rem; margin-top: 1rem; margin-bottom: 1rem;">
                 <h2>{{teamName}}</h2>
                 <h3 *ngIf="espnStats">{{espnStats.team.standingSummary}}</h3>
             </div>
-
         </div>
-        <div class="third">
-            <div style="display: flex; flex-flow: row wrap;" *ngIf="espnStats">
+<!-- screen smaller then 574 changes -->
+        <div class="third" style="flex-grow: 1;">
+            <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;" *ngIf="espnStats">
                 <div class="col text-center" style="flex-basis: 30%;">
                     <h4>{{teamRecord}}</h4>
                     <h5>Record</h5>
                 </div>
-                <div class="col text-center" style="flex-basis: 35%;">
+                <div class="col text-center" style="flex-basis: 35%; padding-left: 1rem; padding-right: 1rem;">
                     <h4>{{espnStats.team.record.items[1].summary}}</h4>
-                    <h5>Home Record</h5>
+                    <h5>Home</h5>
                 </div>
                 <div class="col text-center" style="flex-basis: 35%;">
                     <h4>{{espnStats.team.record.items[2].summary}}</h4>
-                    <h5>Away Record</h5>
+                    <h5>Away</h5>
                 </div>
                 <!-- Possibly add later a feature to select a year and see that years stats -->
                 <!-- <div style="flex-basis: 99%;">
@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    <mat-tab-group style="width: 65%; margin: auto;" mat-stretch-tabs="false" mat-align-tabs="left">
+    <mat-tab-group style="width: 75%; margin: auto;" mat-stretch-tabs="false" mat-align-tabs="left">
         <mat-tab label="Statistics">
             <div style="margin-top: 2rem; padding: 10px; max-width: 99%;" *ngIf="seasonStats">
                 <h2>Offense Stats</h2>
@@ -170,50 +170,50 @@
                     <thead>
                       <tr>
                         <th scope="col">Categories</th>
-                        <th scope="col">{{this.teamInfoService.getTeamName(this.team)}}</th>
-                        <th scope="col">{{this.teamInfoService.getTeamName(compareTeamStats[0].Team)}}</th>
+                        <th scope="col" style="text-align: center;">{{this.teamInfoService.getTeamName(this.team)}}</th>
+                        <th scope="col" style="text-align: center;">{{this.teamInfoService.getTeamName(compareTeamStats[0].Team)}}</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                         <td scope="row">Passing Yards</td>
-                        <td>{{seasonStats[0].PassingYards}}</td>
-                        <td>{{compareTeamStats[0].PassingYards}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].PassingYards}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].PassingYards}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Rushing Yards</td>
-                        <td>{{seasonStats[0].RushingYards}}</td>
-                        <td>{{compareTeamStats[0].RushingYards}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].RushingYards}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].RushingYards}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Oppoenents Passing Yards</td>
-                        <td>{{seasonStats[0].OpponentPassingYards}}</td>
-                        <td>{{compareTeamStats[0].OpponentPassingYards}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].OpponentPassingYards}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].OpponentPassingYards}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Oppoenents Rushing Yards</td>
-                        <td>{{seasonStats[0].OpponentPassingYards}}</td>
-                        <td>{{compareTeamStats[0].OpponentPassingYards}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].OpponentPassingYards}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].OpponentPassingYards}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Passing TDs</td>
-                        <td>{{seasonStats[0].PassingTouchdowns}}</td>
-                        <td>{{compareTeamStats[0].PassingTouchdowns}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].PassingTouchdowns}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].PassingTouchdowns}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Rushing TDs</td>
-                        <td>{{seasonStats[0].RushingTouchdowns}}</td>
-                        <td>{{compareTeamStats[0].RushingTouchdowns}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].RushingTouchdowns}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].RushingTouchdowns}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Opponent Passing TDs</td>
-                        <td>{{seasonStats[0].OpponentPassingTouchdowns}}</td>
-                        <td>{{compareTeamStats[0].OpponentPassingTouchdowns}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].OpponentPassingTouchdowns}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].OpponentPassingTouchdowns}}</td>
                       </tr>
                       <tr>
                         <td scope="row">Opponent Rushing TDs</td>
-                        <td>{{seasonStats[0].OpponentRushingTouchdowns}}</td>
-                        <td>{{compareTeamStats[0].OpponentRushingTouchdowns}}</td>
+                        <td style="text-align: center;">{{seasonStats[0].OpponentRushingTouchdowns}}</td>
+                        <td style="text-align: center;">{{compareTeamStats[0].OpponentRushingTouchdowns}}</td>
                       </tr>
                     </tbody>
                   </table>
