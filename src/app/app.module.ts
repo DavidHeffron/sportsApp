@@ -47,6 +47,6 @@ import { HomeComponent } from './home/home.component';
     MatSelectModule
   ],
   providers: [TeamInfoService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, NavbarComponent]
 })
 export class AppModule { }
