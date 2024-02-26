@@ -39,9 +39,9 @@
         </div>
     </div>
 
-    <mat-tab-group style="width: 75%; margin: auto;" mat-stretch-tabs="false" mat-align-tabs="left">
+    <mat-tab-group style="margin: auto;" [style.width]="this.width" mat-stretch-tabs="false" mat-align-tabs="left">
         <mat-tab label="Statistics">
-            <div style="margin-top: 2rem; padding: 10px; max-width: 99%;" *ngIf="seasonStats">
+            <div style="margin-top: 2rem; padding: 12px; max-width: 99%;" *ngIf="seasonStats">
                 <h2>Offense Stats</h2>
                 <div class="row">
                     <div class="col" style="font-weight: 500;">Total Yards</div>
@@ -121,8 +121,8 @@
                 </div>
             </div>
         </mat-tab>
-        <mat-tab label="Statistics Visualizations">
-            <div style="margin-top: 2rem; padding: 10px; max-width: 99%;">
+        <mat-tab label="Visualizations">
+            <div style="margin-top: 2rem; padding: 10px; max-width: 99%;" [style.scorll-x]="">
                 <div class="row" style="margin: auto;">
                     <h2>Total Yards</h2>
                     <canvas
@@ -138,7 +138,7 @@
                 </div>
                 <h2 style="margin-top: 2rem;">Percentages</h2>
                 <!-- NEXT work add the ability to see teams stats by year -->
-                <div class="row" style="margin: auto; max-width: 75%;">
+                <div class="row" style="margin: auto;">
                     <canvas
                         baseChart
                         class="chart"
@@ -166,7 +166,7 @@
                 </div>
             </div>
             <div *ngIf="compareTeamStats">
-                <table style="width: 100%;">
+                <table style="width: 95%; margin: auto;">
                     <thead>
                       <tr>
                         <th scope="col">Categories</th>

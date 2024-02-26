@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
@@ -31,6 +31,9 @@ export class TeamStatsComponent {
   teamRecord = '';
   espnStats: any;
 
+  screenSize = window.innerWidth;
+  width = '75%';
+
   color: ThemePalette = 'primary';
   mode: ProgressBarMode = 'determinate';
   selectableYears = ['2000', '2001', '2002', '2003', '2004', '2005', '2006', '2007','2008', '2009', '2010', '2011','2012', '2013', '2014', '2015',
@@ -48,6 +51,17 @@ export class TeamStatsComponent {
     this.espnService.getYear().subscribe(items => {
       console.log(items);
     })
+    if(window.innerWidth < 430){
+      this.width = '100%';
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event){
+    this.screenSize = window.innerWidth;
+    if (this.screenSize < 430) this.width = '100%';
+    if(this.screenSize > 430) this.width = '75%';
+    
   }
   
   //get current year for initial load, user can later change year to see different years stats
