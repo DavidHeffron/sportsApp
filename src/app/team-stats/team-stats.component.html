@@ -138,7 +138,7 @@
                 </div>
                 <h2 style="margin-top: 2rem;">Percentages</h2>
                 <!-- NEXT work add the ability to see teams stats by year -->
-                <div class="row" style="margin: auto;">
+                <div class="row" style="margin: auto;" [style.width]="this.width">
                     <canvas
                         baseChart
                         class="chart"
@@ -148,6 +148,7 @@
                     >
                     </canvas>
                 </div>
+                <p style="margin: auto; font-style: italic; margin-bottom: 3rem;">Note: You can click on any of the graph labels ("Offense", "Defense Allowed") to remove those data points from the graph.</p>
             </div>
         </mat-tab>
 

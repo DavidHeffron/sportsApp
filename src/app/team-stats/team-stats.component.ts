@@ -128,7 +128,7 @@ export class TeamStatsComponent {
     labels: ['Passing Yards', 'Rushing Yards', 'Total Yards'],
     datasets: [
       { data: [], label: 'Offense', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
-      { data: [], label: 'Defense', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
+      { data: [], label: 'Defense Allowed', barPercentage: 0.5, borderColor: 'black', borderWidth: 1, borderRadius: {topLeft: 10, topRight: 10}},
     ],
   };
 
