@@ -14,7 +14,7 @@
   </div>
 
 </div>
-<div class="row row-cols-1 row-cols-md-2 g-4" style="margin-left: 2rem; margin-right: 2rem;">
+<div *ngIf="matchUps" class="row row-cols-1 row-cols-md-2 g-4" style="margin-left: 2rem; margin-right: 2rem;">
     <div class="col" *ngFor="let game of matchUps">
         <div class="card">
           <!-- <img src="..." class="card-img-top" alt="..."> -->
@@ -68,4 +68,7 @@
           </div>
         </div>
     </div>
+</div>
+<div *ngIf="!matchUps.length">
+  <h4 style="margin-top: 5rem; text-align: center;">Please check back later to see updated scores for this week!</h4>
 </div>
